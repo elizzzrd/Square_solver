@@ -2,7 +2,7 @@
 #include <math.h>
 #include <float.h>
 
-const double EPSILON = DBL_EPSILON;
+const double EPSILON = 1e-12;
 
 struct input {
 	double a;

@@ -2,6 +2,8 @@
 #include <math.h>
 #include <float.h>
 
+const double EPSILON = DBL_EPSILON;
+
 struct input {
 	double a;
 	double b;
@@ -50,7 +52,7 @@ int main(void)
 	printf("You've entered:\n");
 	printf("a = %.2lf, b = %.2lf, c = %.2lf\n", Coefs.a, Coefs.b, Coefs.c);
 
-	if (fabs(Coefs.a) < DBL_EPSILON)
+	if (fabs(Coefs.a) < EPSILON)
 	{
 		linear_equation_solve(&Coefs, &Solution);
 	}
@@ -106,8 +108,8 @@ double get_coef(void)
 
 void linear_equation_solve(struct input *coef, struct output *roots)
 {
-	if ((fabs(coef->b)) < DBL_EPSILON)
-		if ((fabs(coef->c)) < DBL_EPSILON)
+	if ((fabs(coef->b)) < EPSILON)
+		if ((fabs(coef->c)) < EPSILON)
 		{
 			roots->type = ALL_REAL_NUMBERS;
 		}
@@ -135,7 +137,7 @@ void square_equation_solve(struct input *coef, struct output *roots)
 		roots->real_roots[0] = (-b + sqrt(D)) / (2*a);
 		roots->real_roots[1] = (-b - sqrt(D)) / (2*a);
 	}
-	else if ((fabs(D)) < DBL_EPSILON) {
+	else if ((fabs(D)) < EPSILON) {
 		roots->x0 = (-b) / (2*a);
 		roots->type = ONE_REAL_ROOT;
 	}

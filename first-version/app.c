@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <math.h>
-
+#include <float.h>
 
 struct input {
 	double a;
@@ -34,8 +34,8 @@ struct output {
 void clean_input(void);
 double get_coef(void);
 void get_input(struct input *ptr);
-void power_one_solve(struct input *coef, struct output *roots);
-void power_two_solve(struct input *coef, struct output *roots);
+void linear_equation_solve(struct input *coef, struct output *roots);
+void square_equation_solve(struct input *coef, struct output *roots);
 void show_solution(struct output *ptr);
 
 
@@ -50,10 +50,14 @@ int main(void)
 	printf("You've entered:\n");
 	printf("a = %.2lf, b = %.2lf, c = %.2lf\n", Coefs.a, Coefs.b, Coefs.c);
 
-	if (Coefs.a == 0)
-		power_one_solve(&Coefs, &Solution);
+	if (fabs(Coefs.a) < DBL_EPSILON)
+	{
+		linear_equation_solve(&Coefs, &Solution);
+	}
 	else
-		power_two_solve(&Coefs, &Solution);
+	{
+		square_equation_solve(&Coefs, &Solution);
+	}
 
 	show_solution(&Solution);
 
@@ -82,7 +86,7 @@ void get_input(struct input *ptr)
 
 double get_coef(void)
 {
-	double temp;
+	double temp = 0;
 	while (1)
 	{
 		if (scanf("%lf", &temp) != 1) {
@@ -91,27 +95,33 @@ double get_coef(void)
 			continue;
 		}
 		else
+		{
 			break;
+		}
 	}
 	clean_input();
 	return temp;
 
 }
 
-void power_one_solve(struct input *coef, struct output *roots)
+void linear_equation_solve(struct input *coef, struct output *roots)
 {
-	if (coef->b == 0)
-		if (coef->c == 0)
+	if ((fabs(coef->b)) < DBL_EPSILON)
+		if ((fabs(coef->c)) < DBL_EPSILON)
+		{
 			roots->type = ALL_REAL_NUMBERS;
+		}
 		else
+		{
 			roots->type = NO_SOLUTION;
+		}
 	else {
 		roots->x0 = (-coef->c)/ (coef->b);
 		roots->type = ONE_REAL_ROOT;
 	}
 }
 
-void power_two_solve(struct input *coef, struct output *roots)
+void square_equation_solve(struct input *coef, struct output *roots)
 {
 	double b = coef->b;
 	double a = coef->a;
@@ -125,7 +135,7 @@ void power_two_solve(struct input *coef, struct output *roots)
 		roots->real_roots[0] = (-b + sqrt(D)) / (2*a);
 		roots->real_roots[1] = (-b - sqrt(D)) / (2*a);
 	}
-	else if (D == 0) {
+	else if ((fabs(D)) < DBL_EPSILON) {
 		roots->x0 = (-b) / (2*a);
 		roots->type = ONE_REAL_ROOT;
 	}

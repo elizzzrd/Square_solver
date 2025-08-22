@@ -54,13 +54,15 @@ void show_solution(const struct output ptr)
 		{
 			printf("One real root:\n");
 			printf("x = %.2lf\n", ptr.x0);
+
 			break;
 		}
 		case TWO_REAL_ROOTS:
 		{
 			printf("Two real roots:\n");
 			printf("x1 = %.2lf\n", ptr.real_roots[0]);
-			printf("x2 = %.2lf\n", ptr.real_roots[1]);
+		    printf("x1 = %.2lf\n", ptr.real_roots[1]);
+
 			break;
 		}
 		case TWO_COMPLEX_ROOTS:

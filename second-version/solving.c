@@ -24,10 +24,16 @@ void linear_equation_solve(struct input *const coef, struct output *const roots)
     }
 	else
     {
+        roots->type = ONE_REAL_ROOT;
+
 		roots->x0 = (-coef->c) / (coef->b);
+
+        if (is_zero(roots->x0))
+        {
+            roots->x0 = 0;
+        }
         assert(!isnan(roots->x0));
         assert(!isinf(roots->x0));
-		roots->type = ONE_REAL_ROOT;
 	}
 }
 
@@ -48,23 +54,32 @@ void square_equation_solve(struct input *coef, struct output *roots)
 		roots->real_roots[0] = (-b + sqrt(D)) / (2*a);
 		roots->real_roots[1] = (-b - sqrt(D)) / (2*a);
 
+        if (is_zero(roots->real_roots[0]))
+        {
+            roots->real_roots[0] = 0;
+        }
+        if (is_zero(roots->real_roots[1]))
+        {
+            roots->real_roots[1] = 0;
+        }
+
         assert(!isnan(roots->real_roots[0]));
         assert(!isnan(roots->real_roots[0]));
         assert(!isnan(roots->real_roots[1]));
         assert(!isnan(roots->real_roots[1]));
 	}
 	else if (is_zero(D)) {
-        if (is_zero(b))
+        roots->type = ONE_REAL_ROOT;
+
+        roots->x0 = (-b) / (2*a);
+
+        assert(!isnan(roots->x0));
+        assert(!isinf(roots->x0));
+
+        if (is_zero(roots->x0))
         {
             roots->x0 = 0;
         }
-        else
-        {
-            roots->x0 = (-b) / (2*a);
-            assert(!isnan(roots->x0));
-            assert(!isinf(roots->x0));
-        }
-        roots->type = ONE_REAL_ROOT;
 	}
 	else {
 		roots->type = TWO_COMPLEX_ROOTS;

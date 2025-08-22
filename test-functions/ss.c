@@ -2,73 +2,9 @@
 #include <math.h>
 #include <float.h>
 #include <stdbool.h>
+#include "ss.h"
 
 const double EPSILON = 1e-12;
-
-struct input {
-	double a;
-	double b;
-	double c;
-};
-
-enum SolutionType {
-	NO_SOLUTION,
-	ALL_REAL_NUMBERS,
-	ONE_REAL_ROOT,
-	TWO_REAL_ROOTS,
-	TWO_COMPLEX_ROOTS,
-};
-
-typedef struct {
-	double real;
-	double imag;
-} ComplexNumber;
-
-
-struct output {
-	enum SolutionType type;
-	union {
-		double x0;
-		double real_roots[2];
-		ComplexNumber complex_roots[2];
-	};
-};
-
-void clean_input(void);
-double get_coef(void);
-void get_input(struct input *ptr);
-void linear_equation_solve(struct input *coef, struct output *roots);
-void square_equation_solve(struct input *coef, struct output *roots);
-void show_solution(struct output *ptr);
-bool is_zero(double num);
-
-
-int main(void)
-{
-	struct input Coefs;
-	struct output Solution;
-
-	printf("Solving ax^2 + bx + c = 0\n");
-	get_input(&Coefs);
-
-	printf("You've entered:\n");
-	printf("a = %.2lf, b = %.2lf, c = %.2lf\n", Coefs.a, Coefs.b, Coefs.c);
-
-	if (is_zero(Coefs.a))
-	{
-		linear_equation_solve(&Coefs, &Solution);
-	}
-	else
-	{
-		square_equation_solve(&Coefs, &Solution);
-	}
-
-	show_solution(&Solution);
-
-	printf("The program is finished.\n");
-    return 0;
-}
-
 
 void clean_input(void)
 {
@@ -110,7 +46,11 @@ double get_coef(void)
 
 void linear_equation_solve(struct input *coef, struct output *roots)
 {
+    assert(coef == NULL && "NULL pointer")
+    assert(roots == NULL && "NULL pointer")
+
 	if (is_zero(coef->b))
+    {
 		if (is_zero(coef->c))
 		{
 			roots->type = ALL_REAL_NUMBERS;
@@ -119,21 +59,25 @@ void linear_equation_solve(struct input *coef, struct output *roots)
 		{
 			roots->type = NO_SOLUTION;
 		}
-	else {
-		roots->x0 = (-coef->c)/ (coef->b);
+    }
+	else
+    {
+		roots->x0 = (-coef->c) / (coef->b);
 		roots->type = ONE_REAL_ROOT;
 	}
 }
 
 void square_equation_solve(struct input *coef, struct output *roots)
 {
+    assert(coef == NULL && "NULL pointer")
+    assert(roots == NULL && "NULL pointer")
 	double b = coef->b;
 	double a = coef->a;
 	double c = coef->c;
 
 	double D = b*b - 4*a*c;
 
-	if (D > 0)
+	if (is_positive(D))
 	{
 		roots->type = TWO_REAL_ROOTS;
 		roots->real_roots[0] = (-b + sqrt(D)) / (2*a);
@@ -157,8 +101,9 @@ void square_equation_solve(struct input *coef, struct output *roots)
 	}
 }
 
-void show_solution(struct output *ptr)
+void show_solution(const struct output *ptr)
 {
+    assert(ptr == NULL && "NULL pointer")
 	switch (ptr->type) {
 		case NO_SOLUTION:
 		{
@@ -204,6 +149,14 @@ void show_solution(struct output *ptr)
 bool is_zero(double num)
 {
     if (fabs(num) < EPSILON)
+        return true;
+    else
+        return false;
+}
+
+bool is_positive(double num)
+{
+    if (num > EPSILON)
         return true;
     else
         return false;

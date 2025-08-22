@@ -54,16 +54,10 @@ void square_equation_solve(struct input *coef, struct output *roots)
         assert(!isnan(roots->real_roots[1]));
 	}
 	else if (is_zero(D)) {
-        if (is_zero(b))
-        {
-            roots->x0 = 0;
-        }
-        else
-        {
-            roots->x0 = (-b) / (2*a);
-            assert(!isnan(roots->x0));
-            assert(!isinf(roots->x0));
-        }
+        roots->x0 = (-b) / (2*a);
+        assert(!isnan(roots->x0));
+        assert(!isinf(roots->x0));
+
         roots->type = ONE_REAL_ROOT;
 	}
 	else {

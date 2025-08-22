@@ -53,7 +53,14 @@ void show_solution(const struct output ptr)
 		case ONE_REAL_ROOT:
 		{
 			printf("One real root:\n");
-			printf("x = %.2lf\n", ptr.x0);
+            if (is_zero(ptr.x0))
+            {
+                printf("x = 0.00\n");
+            }
+            else
+            {
+			    printf("x = %.2lf\n", ptr.x0);
+            }
 			break;
 		}
 		case TWO_REAL_ROOTS:

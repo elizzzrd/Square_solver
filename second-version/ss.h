@@ -1,6 +1,7 @@
 #pragma once
 
 
+
 struct input {
 	double a;
 	double b;
@@ -35,5 +36,6 @@ double get_coef(void);
 void get_input(struct input *ptr);
 void linear_equation_solve(struct input *coef, struct output *roots);
 void square_equation_solve(struct input *coef, struct output *roots);
-void show_solution(struct output *ptr);
+void show_solution(const struct output ptr);
 bool is_zero(double num);
+bool is_positive(double num);

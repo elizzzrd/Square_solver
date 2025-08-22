@@ -26,7 +26,7 @@ int main(void)
 		square_equation_solve(&Coefs, &Solution);
 	}
 
-	show_solution(&Solution);
+	show_solution(Solution);
 
 	printf("The program is finished.\n");
     return 0;

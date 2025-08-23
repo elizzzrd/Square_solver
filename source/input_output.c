@@ -2,42 +2,44 @@
 #include <math.h>
 #include <float.h>
 #include <stdbool.h>
-#include "ss.h"
+#include <assert.h>
+#include "structures.h" /// TODO: better not use relative headers, prefer "-I headers"
+#include "input_output.h"
+#include "floating_point_arithmetic.h"
 
-void get_input(struct input *ptr)
+void skip_line(void) // TODO: better name, skip_line?
+{
+    while (getchar() != '\n') continue; // TODO: What if EOF + Ctrl+D?
+}
+
+void read_input(SquareEquationCoefs *coef) 
 {
 	printf("Enter a, b, c:\n");
 	printf("a = ");
-	ptr->a = get_coef();
+	coef->a = read_coef();
 
 	printf("b = ");
-	ptr->b = get_coef();
+	coef->b = read_coef();
 
 	printf("c = ");
-	ptr->c = get_coef();
+	coef->c = read_coef();
 }
 
-double get_coef(void)
+double read_coef(void)
 {
 	double temp = 0;
-	while (1)
-	{
-		if (scanf("%lf", &temp) != 1 || isnan(temp) || isinf(temp)) {
-			clean_input();
-			printf("Invalid coefficient. Please try again: ");
-			continue;
-		}
-		else
-		{
-			break;
-		}
+
+	while (scanf("%lf", &temp) != 1 || isnan(temp) || isinf(temp)) {
+		skip_line();
+		printf("Invalid coefficient. Please try again: ");
 	}
-	clean_input();
+
+	skip_line();
 	return temp;
 
 }
 
-void show_solution(const struct output ptr)
+void print_solution(const QuadraticSolution ptr)
 {
 	switch (ptr.type) {
 		case NO_SOLUTION:
@@ -50,10 +52,10 @@ void show_solution(const struct output ptr)
 			printf("x belongs to the real numbers.\n");
 			break;
 		}
-		case ONE_REAL_ROOT:
+		case ONE_REAL_ROOT: // TODO: you could differentiate two roots with the same value (x - 2)^2 = 0 and one linear root x - 5 = 0
 		{
 			printf("One real root:\n");
-			printf("x = %.2lf\n", ptr.x0);
+			printf("x = %.2lf\n", ptr.x0); // TODO: 
 
 			break;
 		}
@@ -76,8 +78,8 @@ void show_solution(const struct output ptr)
             }
             break;
 		}
-		default:
-			fprintf(stderr, "Unknown SolutionType\n");
+		default: 
+			assert(false && "Unknown SolutionType\n");
 			break;
 	}
 }

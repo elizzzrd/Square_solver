@@ -35,16 +35,3 @@ typedef struct {
 } QuadraticSolution;
 
 
-struct check_answers {
-    enum SolutionType type;
-    union {
-		double x0;
-		double real_roots[2];
-		ComplexNumber complex_roots[2];
-	};
-};
-
-typedef struct {
-    SquareEquationCoefs test_coefs;
-    struct check_answers;
-} Test;

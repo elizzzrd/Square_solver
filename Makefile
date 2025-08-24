@@ -27,9 +27,35 @@ $(TARGET): $(OBJS)
 %.o: %.c $(HEADERS)
 	$(CC) $(INCLUDES) $(CFLAGS) -c $< -o $@
 
-clean:
-	del $(SRCS_DIR)\*.o
 
+
+TEST_TARGET = test_program
+
+TEST_SRCS = $(wildcard tests/*.c)
+TEST_OBJS = $(TEST_SRCS:.c=.o)
+TESTS_DIR = tests
+
+
+tests: $(TEST_TARGET)
+	
+
+$(TEST_TARGET): $(TEST_OBJS) source/equation_solver.o source/floating_point_arithmetic.o
+	$(CC) $(TEST_OBJS) source/equation_solver.o source/floating_point_arithmetic.o -o $(TEST_TARGET)
+
+
+$(TESTS_DIR)/%.o: $(TESTS_DIR)/%.c $(HEADERS)
+	$(CC) $(INCLUDES) $(CFLAGS) -c $< -o $@
+
+
+clean:
+	del $(SRCS_DIR)\*.o $(TESTS_DIR)\*.o
+
+
+check: tests
+	./$(TEST_TARGET)
+
+
+.PHONY: all tests check clean
 
 # TODO: separate target for tests
 # TODO: separate PHONY: check, which runs test

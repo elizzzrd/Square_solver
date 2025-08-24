@@ -9,9 +9,9 @@
 
 
 
-void test_solve_square(Test data_for_tests[], size_t number_of_tests)
+int test_solve_square(Test data_for_tests[], size_t number_of_tests)
 {
-    
+    int failed = 0; 
     for (size_t i = 0; i < number_of_tests; i++)
     {
         SquareEquationCoefs Coefs;
@@ -20,7 +20,6 @@ void test_solve_square(Test data_for_tests[], size_t number_of_tests)
         Coefs.c = data_for_tests[i].test_coefs.c;
 
         QuadraticSolution Solution;
-
         if (is_zero(Coefs.a))
 	    {
 		    linear_equation_solve(&Coefs, &Solution);
@@ -49,6 +48,7 @@ void test_solve_square(Test data_for_tests[], size_t number_of_tests)
                     {
                         printf("FAILED: for coefs (a = %.2lf, b = %.2lf, c = %.2lf) received x = %.2lf (it should be %.2lf)\n",
                         Coefs.a, Coefs.b, Coefs.c, Solution.x0, data_for_tests[i].x0); 
+                        failed++;
                     }
                     break;
                 }
@@ -60,6 +60,7 @@ void test_solve_square(Test data_for_tests[], size_t number_of_tests)
                         printf("FAILED: for coefs (a = %.2lf, b = %.2lf, c = %.2lf) received x1 = %.2lf, x2 = %.2lf (it should be %.2lf %.2lf)\n",
                         Coefs.a, Coefs.b, Coefs.c, Solution.real_roots[0],Solution.real_roots[1],
                          data_for_tests[i].real_roots[0], data_for_tests[i].real_roots[1]); 
+                        failed++;
                     }
                     break;
                 }
@@ -70,21 +71,25 @@ void test_solve_square(Test data_for_tests[], size_t number_of_tests)
                     double_comparison(Solution.complex_roots[0].real, data_for_tests[i].complex_roots[0].real) &&
                     double_comparison(Solution.complex_roots[1].real, data_for_tests[i].complex_roots[1].real)))
                     {
-                        printf("FAILED with complex numbers");
+                        printf("FAILED with complex numbers\n");
+                        failed++;
                     }
                     break;
                 }
                 default: 
+                {
 			        assert(false && "Unknown SolutionType\n");
 			        break;
+                }
             }
         }
         else
         {
             printf("FAILED: types of solutions doesn't match");
+            failed++;
         }
     }
-
+    return failed;
 }
 
 

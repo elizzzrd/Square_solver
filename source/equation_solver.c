@@ -7,6 +7,18 @@
 #include "equation_solver.h"
 #include "floating_point_arithmetic.h"
 
+void square_solve(SquareEquationCoefs * Coef, QuadraticSolution * Solution)
+{
+    if (is_zero(Coef->a))
+	{
+		linear_equation_solve(Coef, Solution);
+	}
+	else
+	{
+		square_equation_solve(Coef, Solution);
+	}
+}
+
 
 
 void linear_equation_solve(SquareEquationCoefs * coef, QuadraticSolution * roots)

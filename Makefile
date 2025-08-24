@@ -21,11 +21,11 @@ SRCS_DIR = source
 
 all: $(TARGET)
 
-$(TARGET): $(OBJS)
-	$(CC) $(OBJS) -o $(TARGET)
+$(TARGET): $(OBJS) tests/tests.o tests/read_file.o
+	@$(CC) $(OBJS) tests/tests.o tests/read_file.o -o $(TARGET)
 
 %.o: %.c $(HEADERS)
-	$(CC) $(INCLUDES) $(CFLAGS) -c $< -o $@
+	@$(CC) $(INCLUDES) $(CFLAGS) -c $< -o $@
 
 
 
@@ -39,12 +39,12 @@ TESTS_DIR = tests
 tests: $(TEST_TARGET)
 	
 
-$(TEST_TARGET): $(TEST_OBJS) source/equation_solver.o source/floating_point_arithmetic.o
-	$(CC) $(TEST_OBJS) source/equation_solver.o source/floating_point_arithmetic.o -o $(TEST_TARGET)
+$(TEST_TARGET): $(TEST_OBJS) source/equation_solver.o source/floating_point_arithmetic.o 
+	@$(CC) $(TEST_OBJS) source/equation_solver.o source/floating_point_arithmetic.o -o $(TEST_TARGET)
 
 
 $(TESTS_DIR)/%.o: $(TESTS_DIR)/%.c $(HEADERS)
-	$(CC) $(INCLUDES) $(CFLAGS) -c $< -o $@
+	@$(CC) $(INCLUDES) $(CFLAGS) -c $< -o $@
 
 
 clean:
@@ -56,12 +56,3 @@ check: tests
 
 
 .PHONY: all tests check clean
-
-# TODO: separate target for tests
-# TODO: separate PHONY: check, which runs test
-# NOTE:
-# tests: tests.o solver.o
-# 	...
-#
-# check: tests
-# 	./tests

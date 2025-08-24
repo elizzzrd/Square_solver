@@ -3,7 +3,7 @@
 #include "structures.h"
 
 struct check_answers {
-    enum SolutionType type;
+    int type;
     union {
 		double x0;
 		double real_roots[2];

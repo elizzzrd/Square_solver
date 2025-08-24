@@ -7,6 +7,7 @@
 #include "input_output.h"
 #include "floating_point_arithmetic.h"
 
+
 void skip_line(void) // TODO: better name, skip_line?
 {
     while (getchar() != '\n') continue; // TODO: What if EOF + Ctrl+D?
@@ -39,9 +40,9 @@ double read_coef(void)
 
 }
 
-void print_solution(const QuadraticSolution ptr)
+void print_solution(const QuadraticSolution solution)
 {
-	switch (ptr.type) {
+	switch (solution.type) {
 		case NO_SOLUTION:
 		{
 			printf("The equation has no solutions\n");
@@ -55,15 +56,15 @@ void print_solution(const QuadraticSolution ptr)
 		case ONE_REAL_ROOT: // TODO: you could differentiate two roots with the same value (x - 2)^2 = 0 and one linear root x - 5 = 0
 		{
 			printf("One real root:\n");
-			printf("x = %.2lf\n", ptr.x0); // TODO: 
+			printf("x = %.2lf\n", solution.x0); 
 
 			break;
 		}
 		case TWO_REAL_ROOTS:
 		{
 			printf("Two real roots:\n");
-			printf("x1 = %.2lf\n", ptr.real_roots[0]);
-		    printf("x1 = %.2lf\n", ptr.real_roots[1]);
+			printf("x1 = %.2lf\n", solution.real_roots[0]);
+		    printf("x2 = %.2lf\n", solution.real_roots[1]);
 
 			break;
 		}
@@ -71,10 +72,12 @@ void print_solution(const QuadraticSolution ptr)
 		{
 			printf("Two complex roots:\n");
 			for (int i = 0; i < 2; i++) {
-                double imag = ptr.complex_roots[i].imag;
+                double imag = solution.complex_roots[i].imag;
                 char sign = (imag >= 0) ? '+' : '-';
-                printf("x%d = %.2f %c %.2fi\n", i + 1, ptr.complex_roots[i].real,
+                printf("x%d = %.2f %c %.2fi\n", i + 1, solution.complex_roots[i].real,
                        sign, fabs(imag));
+
+			
             }
             break;
 		}

@@ -1,38 +1,33 @@
 #include <stdio.h>
 #include <math.h>
-#include <float.h>
 #include <stdbool.h>
 #include "structures.h"
+#include <string.h>
+#include <assert.h>
 #include "input_output.h"
 #include "floating_point_arithmetic.h"
 #include "equation_solver.h"
+#include "read_file.h"
+#include "tests.h"
+#include "command_argc.h"
 
 
-
-
-int main(void)
+int main(int argc, char *argv[])
 {
-	SquareEquationCoefs Coefs;
-	QuadraticSolution Solution;
+	char *option = argv[1];
+	program_t program_todo = NULL;
+	char choice = getchoice(option);
 
-	printf("Solving ax^2 + bx + c = 0\n\n");
-	read_input(&Coefs);
-
-	printf("\nYou've entered:\n");
-	printf("a = %.2lf, b = %.2lf, c = %.2lf\n\n", Coefs.a, Coefs.b, Coefs.c);
-
-	if (is_zero(Coefs.a))
+	switch(choice)
 	{
-		linear_equation_solve(&Coefs, &Solution);
-	}
-	else
-	{
-		square_equation_solve(&Coefs, &Solution);
+		case 'h': program_todo = print_help; break;
+		case 't': program_todo = run_tests; break;
+		case 's': program_todo = lets_solve_square_equation; break;
+		case 'n': printf("Programm is finished.\n"); return 0;
+		default: assert(false && "unknown option"); break;
 	}
 
-	print_solution(Solution);
+	(*program_todo)();
 
-
-	printf("The program is finished.\n");
     return 0;
 }

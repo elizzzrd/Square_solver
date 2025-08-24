@@ -10,10 +10,10 @@ typedef struct {
 
 enum SolutionType {
 	NO_SOLUTION,       // = 0,
-	ALL_REAL_NUMBERS,  // = -2,
-	ONE_REAL_ROOT,     // = 1,
-	TWO_REAL_ROOTS,    // = 2,
-	TWO_COMPLEX_ROOTS, // = -1,
+	ALL_REAL_NUMBERS,  // = 1,
+	ONE_REAL_ROOT,     // = 2,
+	TWO_REAL_ROOTS,    // = 3,
+	TWO_COMPLEX_ROOTS, // = 4,
 
 	// TODO: explicit numbering allows you to iterate through roots array with solution when you display it
 };

@@ -1,5 +1,5 @@
 #pragma once
-
+#include <stdbool.h>
 
 static const double EPSILON = 1e-12;
 

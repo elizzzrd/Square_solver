@@ -11,6 +11,8 @@
 
 
 
+
+
 const char *options[] = {
 	"--help", "-h",
 	"--tests","-t",
@@ -60,29 +62,19 @@ void print_help(void)
 void run_tests(void)
 {
 	Test data_for_tests[NMAX];
-    read_file(data_for_tests, "tests/data.txt");
-    static const size_t number_of_tests = sizeof(data_for_tests) / sizeof(data_for_tests[0]);
-    printf("\nTesting equation solver\n\n");
-
-    int failed = 0;
-    failed = test_solve_square(data_for_tests, number_of_tests);
-
-    if (!failed)
-    {
-        printf("All tests passed!\n\n");
-    }
-    else
-    {
-        printf("%d tests failed.\n\n", failed);
-    }
-	printf("The program is finished.\n\n");
+    run_tests_command_line(data_for_tests, "tests/data.txt");
 }
 
 void use_testdata_from_file(Flag command_argc)
 {
 	Test data_for_tests[NMAX];
-    read_file(data_for_tests, command_argc.filename);
-    static const size_t number_of_tests = sizeof(data_for_tests) / sizeof(data_for_tests[0]);
+    run_tests_command_line(data_for_tests, command_argc.filename);
+}
+
+void run_tests_command_line(Test data_for_tests[], const char * filename)
+{
+	read_file(data_for_tests, filename);
+    const size_t number_of_tests = sizeof(*data_for_tests) / sizeof(data_for_tests[0]);
     printf("\nTesting equation solver\n\n");
 
     int failed = 0;

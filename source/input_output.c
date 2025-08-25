@@ -8,7 +8,7 @@
 #include "floating_point_arithmetic.h"
 
 
-void skip_line(void) // TODO: better name, skip_line?
+void skip_line(void) 
 {
     while (getchar() != '\n') continue; // TODO: What if EOF + Ctrl+D?
 }
@@ -16,6 +16,7 @@ void skip_line(void) // TODO: better name, skip_line?
 void read_input(SquareEquationCoefs *coef) 
 {
 	printf("Enter a, b, c:\n");
+
 	printf("a = ");
 	coef->a = read_coef();
 
@@ -76,8 +77,6 @@ void print_solution(const QuadraticSolution solution)
                 char sign = (imag >= 0) ? '+' : '-';
                 printf("x%d = %.2f %c %.2fi\n", i + 1, solution.complex_roots[i].real,
                        sign, fabs(imag));
-
-			
             }
             break;
 		}

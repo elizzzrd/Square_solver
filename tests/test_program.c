@@ -38,7 +38,7 @@ static Test data_for_tests[] = {
 int main(void)
 {
     Test data_for_tests[NMAX];
-    read_file(data_for_tests);
+    read_file(data_for_tests, "tests/data.txt");
     static const size_t number_of_tests = sizeof(data_for_tests) / sizeof(data_for_tests[0]);
     printf("\nTesting equation solver\n\n");
 

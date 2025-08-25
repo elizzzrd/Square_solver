@@ -7,6 +7,7 @@
 #include "equation_solver.h"
 #include "floating_point_arithmetic.h"
 
+
 void square_solve(SquareEquationCoefs * Coef, QuadraticSolution * Solution)
 {
     if (is_zero(Coef->a))
@@ -18,7 +19,6 @@ void square_solve(SquareEquationCoefs * Coef, QuadraticSolution * Solution)
 		square_equation_solve(Coef, Solution);
 	}
 }
-
 
 
 void linear_equation_solve(SquareEquationCoefs * coef, QuadraticSolution * roots)
@@ -49,6 +49,7 @@ void linear_equation_solve(SquareEquationCoefs * coef, QuadraticSolution * roots
         assert(!isinf(roots->x0) && "Root cant be infinity");
 	}
 }
+
 
 void square_equation_solve(SquareEquationCoefs *coef, QuadraticSolution *roots)
 {
@@ -83,15 +84,16 @@ void square_equation_solve(SquareEquationCoefs *coef, QuadraticSolution *roots)
         assert(!isnan(roots->real_roots[1]) && "Root cant be nan");
         assert(!isinf(roots->real_roots[1]) && "Root cant be infinity"); 
 	}
-	else if (is_zero(D)) {
+	else if (is_zero(D)) 
+	{
         roots->type = ONE_REAL_ROOT;
 
         roots->x0 = (-b) / (2*a);
 
+        clamp_to_zero(&roots->x0);
+
         assert(!isnan(roots->x0) && "Root cant be nan");
         assert(!isinf(roots->x0) && "Root cant be infinity");
-
-        clamp_to_zero(&roots->x0);
 	}
 	else {
 		roots->type = TWO_COMPLEX_ROOTS;
@@ -99,16 +101,14 @@ void square_equation_solve(SquareEquationCoefs *coef, QuadraticSolution *roots)
 		double real = (-b) / (2*a);
 		double imag = (sqrt(-D)) / (2*a);
 
+		roots->complex_roots[0].real = real;
+		roots->complex_roots[0].imag = imag;
+		roots->complex_roots[1].real = real;
+		roots->complex_roots[1].imag = -imag;
+
         assert(!isnan(real) && "Root cant be nan");
         assert(!isnan(imag) && "Root cant be infinity");
         assert(!isinf(real) && "Root cant be nan");
         assert(!isinf(imag) && "Root cant be infinity");
-
-
-		roots->complex_roots[0].real = real;
-		roots->complex_roots[0].imag = imag;
-
-		roots->complex_roots[1].real = real;
-		roots->complex_roots[1].imag = -imag;
 	}
 }

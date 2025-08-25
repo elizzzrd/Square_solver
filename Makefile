@@ -16,6 +16,7 @@ TARGET = program
 SRCS = $(wildcard source/*.c)
 HEADERS = $(wildcard headers/*.h)
 OBJS = $(SRCS:.c=.o)
+OBJDIR := objs
 
 SRCS_DIR = source
 

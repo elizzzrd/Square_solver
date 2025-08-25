@@ -1,5 +1,5 @@
 #pragma once
-
+#include "structures.h"
 
 void read_input(SquareEquationCoefs *ptr); 
 double read_coef(void); 

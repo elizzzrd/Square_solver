@@ -14,8 +14,6 @@ enum SolutionType {
 	ONE_REAL_ROOT,     // = 2,
 	TWO_REAL_ROOTS,    // = 3,
 	TWO_COMPLEX_ROOTS, // = 4,
-
-	// TODO: explicit numbering allows you to iterate through roots array with solution when you display it
 };
 
 // TODO: complex number can be separated?

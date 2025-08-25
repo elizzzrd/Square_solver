@@ -1,6 +1,7 @@
 {
     "files.associations": {
         "structures.h": "c",
-        "read_file.h": "c"
+        "read_file.h": "c",
+        "command_argc.h": "c"
     }
 }

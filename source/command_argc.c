@@ -1,16 +1,17 @@
 #include <stdio.h>
-#include <assert.h>
 #include <string.h>
 #include <stdlib.h>
 #include <ctype.h>
 #include <stdbool.h>
 #include "structures.h"
-#include "input_output.h"
 #include "floating_point_arithmetic.h"
 #include "equation_solver.h"
 #include "read_file.h"
 #include "tests.h"
+#include "input_output.h"
 #include "command_argc.h"
+
+
 
 
 Flag_t list_of_flags[] = {
@@ -80,15 +81,17 @@ int flag_names_comparison(char *possible_flag, Flag_t flags[])
 int print_help(char * argv[], int current_index_argv, int argc)
 {
 	int help_argc = 0;
-	printf("\nHello, this is square solver program!!!\n");
+	printf("\nHello(Meow), this is square solver program!!!\n");
 	printf("\nPossible flags to use:\n\n"
 			"\"-h\" or \"--help\" - provide information about usage of this program.\n\n"
 			"\"-s\" or \"--solve\" - launch square equations solver.\n\n"
 			"\"-t\" or \"--tests\" - launch tests for equation solver.\n\n"
 			"\"-f\" or \"--file\" -  launch tests for equation solver from file you provide.\n"
-			"syntax: [\"name of programm\"] \"--file\" [\"path to file\"]\n\n"
+			"syntax: [\"name of programm\"] [\"--file\"] [\"path to file\"]\n\n"
 			"\"-c\" or \"--coefs\" - launch square equation solver with coefficients you enter.\n"
-			"syntax: [\"name of programm\"] \"--coefs\" \"a b c\" for equation ax^2 + bx + c = 0\n\n");
+			"syntax: [\"name of programm\"] [\"--coefs\"] [\"a b c\"] for equation ax^2 + bx + c = 0\n"
+			"\nYou can also enter several flags like this:\n"
+			"syntax: [\"name of programm\"] [\"flag1 with its arguments\"] [\"flag2 with its arguments\"] and so on...\n\n");
 	
 	return help_argc;
 }

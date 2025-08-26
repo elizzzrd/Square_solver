@@ -1,10 +1,8 @@
 #include <stdio.h>
-#include <stdbool.h>
 #include "structures.h"
 #include "tests.h"
 #include "floating_point_arithmetic.h"
 #include "equation_solver.h"
-#include <assert.h>
 #include "read_file.h"
 
 /*

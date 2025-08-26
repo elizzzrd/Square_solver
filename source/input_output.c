@@ -1,9 +1,8 @@
 #include <stdio.h>
 #include <math.h>
-#include <float.h>
 #include <stdbool.h>
 #include <assert.h>
-#include "structures.h" /// TODO: better not use relative headers, prefer "-I headers"
+#include "structures.h" 
 #include "input_output.h"
 #include "floating_point_arithmetic.h"
 

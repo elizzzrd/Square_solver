@@ -1,5 +1,8 @@
 #pragma once
+
+
 #include "structures.h"
+#include "tests.h"
 #define NFLAGS 5
 
 

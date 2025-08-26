@@ -1,18 +1,5 @@
 #include <stdio.h>
-#include <math.h>
-#include <stdbool.h>
-#include <stdlib.h>
-#include <string.h>
-#include <assert.h>
-#include "input_output.h"
-#include "floating_point_arithmetic.h"
-#include "equation_solver.h"
-#include "read_file.h"
-#include "tests.h"
 #include "command_argc.h"
-#include "structures.h"
-
-
 
 
 

@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <math.h>
-#include <float.h>
 #include <stdbool.h>
 #include <assert.h>
 #include "structures.h"

@@ -1,6 +1,9 @@
 #include <stdio.h>
 #include <assert.h>
 #include <string.h>
+#include <stdlib.h>
+#include <ctype.h>
+#include <stdbool.h>
 #include "structures.h"
 #include "input_output.h"
 #include "floating_point_arithmetic.h"
@@ -10,42 +13,73 @@
 #include "command_argc.h"
 
 
+Flag_t list_of_flags[] = {
+	{.short_name = "-h", .long_name = "--help", .flag_argc = 0, .program_t = print_help},
+	{.short_name = "-s", .long_name = "--solve", .flag_argc = 0, .program_t = lets_solve_square_equation},
+	{.short_name = "-t", .long_name = "--tests", .flag_argc = 0, .program_t = run_tests},
+	{.short_name = "-f", .long_name = "--file", .flag_argc = 1, .program_t = use_testdata_from_file},
+	{.short_name = "-c", .long_name = "--coefs", .flag_argc = 3, .program_t = instant_coefs_input}
+};
+
+size_t size_flag_list = sizeof(list_of_flags) / sizeof(list_of_flags[0]);
 
 
-
-const char *options[] = {
-	"--help", "-h",
-	"--tests","-t",
-	"--solve", "-s",
-	"--file", "-f",
-	"--coefs", "-c"
-}; 
-
-
-char getchoice(const char *choice)
+int parse_flags(int argc, char *argv[])
 {
-	size_t index = sizeof(options)/ sizeof(options[0]);
-	for (size_t i = 0; i < index; i++)
+	int executed_flags = 0;
+	if (argc == 1)
 	{
-		if (strcmp(options[i], choice) == 0)
-		{
-			if (choice[1] == '-')
+		return print_help(argv, 0, argc);
+	}
+	else
+	{
+		for (int current_index = 1; current_index < argc; current_index++)
+		{	
+			int type = flag_names_comparison(argv[current_index], list_of_flags);
+			if (type == -1) 
 			{
-				return (options[i][2]);
+				return -1;
 			}
-			else
+
+			Flag_t flag = list_of_flags[type];
+			int (*flag_todo)(char * argv[], int current_index_argv, int argc) = flag.program_t;
+			int returned_value = (*flag_todo)(argv, current_index, argc);
+			if (returned_value == -1)
 			{
-				return (options[i][1]);
+				return -1;
+			}
+			else 
+			{
+				current_index += returned_value;
+				executed_flags++;
 			}
 		}
 	}
-    printf("\nSorry, unknown flag, type help.\n");
-	return ('n');
+	return executed_flags;
 }
 
 
-void print_help(void)
+int flag_names_comparison(char *possible_flag, Flag_t flags[])
 {
+	for (size_t i = 0; i < size_flag_list; i++)
+	{
+		if (strcmp(possible_flag, flags[i].short_name) == 0)
+		{
+			return (int)i;
+		}
+		else if (strcmp(possible_flag, flags[i].long_name) == 0)
+		{
+			return (int)i;
+		}
+	}
+	return -1;
+}
+
+
+
+int print_help(char * argv[], int current_index_argv, int argc)
+{
+	int help_argc = 0;
 	printf("\nHello, this is square solver program!!!\n");
 	printf("\nPossible flags to use:\n\n"
 			"\"-h\" or \"--help\" - provide information about usage of this program.\n\n"
@@ -55,21 +89,35 @@ void print_help(void)
 			"syntax: [\"name of programm\"] \"--file\" [\"path to file\"]\n\n"
 			"\"-c\" or \"--coefs\" - launch square equation solver with coefficients you enter.\n"
 			"syntax: [\"name of programm\"] \"--coefs\" \"a b c\" for equation ax^2 + bx + c = 0\n\n");
-
+	
+	return help_argc;
 }
 
 
-void run_tests(void)
+int run_tests(char * argv[], int current_index_argv, int argc)
 {
+	int tests_argc = 0;
 	Test data_for_tests[NMAX];
     run_tests_command_line(data_for_tests, "tests/data.txt");
+	return tests_argc;
 }
 
-void use_testdata_from_file(Flag command_argc)
+int use_testdata_from_file(char * argv[], int current_index_argv, int argc)
 {
-	Test data_for_tests[NMAX];
-    run_tests_command_line(data_for_tests, command_argc.filename);
+	int file_argc = 1;
+
+	if ((current_index_argv + file_argc < argc))
+	{
+		Test data_for_tests[NMAX];
+		run_tests_command_line(data_for_tests, argv[current_index_argv + 1]);
+		return file_argc;
+	}
+	else
+	{
+		return -1;
+	}	
 }
+
 
 void run_tests_command_line(Test data_for_tests[], const char * filename)
 {
@@ -88,12 +136,12 @@ void run_tests_command_line(Test data_for_tests[], const char * filename)
     {
         printf("%d tests failed.\n\n", failed);
     }
-	printf("The program is finished.\n\n");
 }
 
 
-void lets_solve_square_equation(void)
+int lets_solve_square_equation(char * argv[], int current_index_argv, int argc)
 {
+	int solve_argc = 0;
 	SquareEquationCoefs Coefs = {};
 	QuadraticSolution Solution = {};
 
@@ -107,27 +155,40 @@ void lets_solve_square_equation(void)
 
 	print_solution(Solution);
 
-	printf("The program is finished.\n\n");
+	return solve_argc;
+	
 }
 
 
-void instant_coefs_input(Flag command_argc)
+int instant_coefs_input(char * argv[], int current_index_argv, int argc)
 {
-	SquareEquationCoefs Coefs = {};
-	QuadraticSolution Solution = {};
+	int coefs_flags = 3;
+	if ((current_index_argv + coefs_flags < argc + 1))
+	{
+		SquareEquationCoefs Coefs = {};
+		QuadraticSolution Solution = {};
 
-	Coefs.a = command_argc.coefs.a;
-	Coefs.b = command_argc.coefs.b;
-	Coefs.c = command_argc.coefs.c;
+		if (convert_to_float(argv[current_index_argv + 1], &Coefs.a) && 
+			convert_to_float(argv[current_index_argv + 2], &Coefs.b) &&
+			convert_to_float(argv[current_index_argv + 3], &Coefs.c))
+		{
+			printf("\nYou've entered:\n");
+			printf("a = %.2lf, b = %.2lf, c = %.2lf\n\n", Coefs.a, Coefs.b, Coefs.c);
 
-	printf("\nYou've entered:\n");
-	printf("a = %.2lf, b = %.2lf, c = %.2lf\n\n", Coefs.a, Coefs.b, Coefs.c);
+			square_solve(&Coefs, &Solution);
 
-	square_solve(&Coefs, &Solution);
-
-	print_solution(Solution);
-
-	printf("The program is finished.\n\n");
+			print_solution(Solution);
+			return coefs_flags;
+		}
+		else
+		{
+			return -1;
+		}
+	}
+	else
+	{
+		return -1;
+	}
 }
 
 

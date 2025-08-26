@@ -11,15 +11,14 @@
 bool read_file(Test data_for_tests[], const char * filename)
 {
     FILE *data;
-    //int ch;
     if ((data = fopen(filename, "r")) == NULL)
     {
-        fprintf(stderr, "Can not open the file \"%s\"\n", "data.txt");
+        fprintf(stderr, "Can not open the file \"%s\"\n", filename);
         exit(EXIT_FAILURE);
     }
     rewind(data);
     
-    
+
     int count = 0;
     while (count < NMAX)
     {
@@ -35,7 +34,6 @@ bool read_file(Test data_for_tests[], const char * filename)
         }
         
         symbols_read = 0;
-        //printf("Checking input data!!!! (%d)\n", count);
         if (data_for_tests[count].check_solution.type == 0 || data_for_tests[count].check_solution.type == 1)
         {
             ;

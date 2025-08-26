@@ -101,6 +101,7 @@ void square_equation_solve(SquareEquationCoefs *coef, QuadraticSolution *roots)
 		double real = (-b) / (2*a);
 		double imag = (sqrt(-D)) / (2*a);
 
+
 		roots->complex_roots[0].real = real;
 		roots->complex_roots[0].imag = imag;
 		roots->complex_roots[1].real = real;

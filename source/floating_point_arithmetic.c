@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <math.h>
 #include <stdbool.h>
+#include <stdlib.h>
 #include "structures.h"
 #include "floating_point_arithmetic.h"
 
@@ -30,11 +31,26 @@ bool double_comparison(double number1, double number2)
     return (fabs(number1 - number2) < EPSILON);
 }
 
-// NOTE: Fun note
-// Ctrl+C = interrupt program
-// Ctrl+Z = suspend program
-// Ctrl+D = EOF = end of file
-// Ctrl+L = EOL = end of line
-// Ctrl+X = stop, Ctrl+Q = resume
-// Ctrl+[ = ESC
-// Ctrl+J = Enter
+
+bool convert_to_float(const char *str_to_convert, double * double_number) 
+{
+    if (str_to_convert == NULL) return false;
+
+    char *end_of_str;
+    strtod(str_to_convert, &end_of_str);
+
+    if ((*end_of_str) == '\0')
+    {
+        (*double_number) = (*str_to_convert);
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+
+
+
+

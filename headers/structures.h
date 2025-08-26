@@ -16,7 +16,7 @@ enum SolutionType {
 	TWO_COMPLEX_ROOTS, // = 4,
 };
 
-// TODO: complex number can be separated?
+
 typedef struct {
 	double real;
 	double imag;
@@ -27,7 +27,7 @@ typedef struct {
 	enum SolutionType type;
 	union {
 		double x0;
-		double real_roots[2]; // TODO: You can use real_roots for both linear and quadratic case, if one or more roots are absent, you can replace them with a NAN
+		double real_roots[2]; 
 		ComplexNumber complex_roots[2];
 	};
 } QuadraticSolution;

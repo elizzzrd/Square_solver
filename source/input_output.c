@@ -10,7 +10,7 @@
 
 void skip_line(void) 
 {
-    while (getchar() != '\n') continue; // TODO: What if EOF + Ctrl+D?
+    while (getchar() != '\n') continue; 
 }
 
 void read_input(SquareEquationCoefs *coef) 
@@ -54,7 +54,7 @@ void print_solution(const QuadraticSolution solution)
 			printf("x belongs to the real numbers.\n");
 			break;
 		}
-		case ONE_REAL_ROOT: // TODO: you could differentiate two roots with the same value (x - 2)^2 = 0 and one linear root x - 5 = 0
+		case ONE_REAL_ROOT: 
 		{
 			printf("One real root:\n");
 			printf("x = %.2lf\n", solution.x0); 

@@ -37,7 +37,6 @@ double read_coef(void)
 
 	skip_line();
 	return temp;
-
 }
 
 void print_solution(const QuadraticSolution solution)

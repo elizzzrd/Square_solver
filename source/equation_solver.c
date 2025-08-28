@@ -58,9 +58,9 @@ void square_equation_solve(SquareEquationCoefs *coef, QuadraticSolution *roots)
 	double b = coef->b;
 	double a = coef->a;
 	double c = coef->c;
-
 	double D = b*b - 4*a*c;
 
+	
 	if (is_positive(D))
 	{
 		roots->type = TWO_REAL_ROOTS;
@@ -78,6 +78,7 @@ void square_equation_solve(SquareEquationCoefs *coef, QuadraticSolution *roots)
         clamp_to_zero(&roots->real_roots[0]);
         clamp_to_zero(&roots->real_roots[1]);
        
+
         assert(!isnan(roots->real_roots[0]) && "Root cant be nan");
         assert(!isinf(roots->real_roots[0]) && "Root cant be infinity");
         assert(!isnan(roots->real_roots[1]) && "Root cant be nan");
@@ -90,6 +91,7 @@ void square_equation_solve(SquareEquationCoefs *coef, QuadraticSolution *roots)
         roots->x0 = (-b) / (2*a);
 
         clamp_to_zero(&roots->x0);
+
 
         assert(!isnan(roots->x0) && "Root cant be nan");
         assert(!isinf(roots->x0) && "Root cant be infinity");
@@ -105,6 +107,7 @@ void square_equation_solve(SquareEquationCoefs *coef, QuadraticSolution *roots)
 		roots->complex_roots[0].imag = imag;
 		roots->complex_roots[1].real = real;
 		roots->complex_roots[1].imag = -imag;
+
 
         assert(!isnan(real) && "Root cant be nan");
         assert(!isnan(imag) && "Root cant be infinity");

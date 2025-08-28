@@ -12,6 +12,7 @@ bool is_zero(double num)
     return (fabs(num) < EPSILON);
 }
 
+
 bool is_positive(double num)
 {
     return (num > EPSILON);
@@ -25,6 +26,7 @@ void clamp_to_zero(double * number)
         *number = 0;
     }
 }
+
 
 bool double_comparison(double number1, double number2)
 {

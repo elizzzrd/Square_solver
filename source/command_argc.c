@@ -15,7 +15,8 @@
 
 
 
-Flag_t list_of_flags[] = {
+Flag_t list_of_flags[] = 
+{
 	{.short_name = "-h", .long_name = "--help", .flag_argc = 0, .program_t = print_help},
 	{.short_name = "-s", .long_name = "--solve", .flag_argc = 0, .program_t = lets_solve_square_equation},
 	{.short_name = "-t", .long_name = "--tests", .flag_argc = 0, .program_t = run_tests},
@@ -30,6 +31,7 @@ int parse_flags(int argc, char *argv[])
 {
 	assert(argc != 0 && "Argc cant be 0");
 	assert(argv != NULL && "Argv cant be NULL");
+
 
 	int executed_flags = 0;
 	if (argc == 1)
@@ -49,6 +51,8 @@ int parse_flags(int argc, char *argv[])
 			Flag_t flag = list_of_flags[type];
 			int (*flag_todo)(char * argv[], int current_index_argv, int argc) = flag.program_t;
 			int returned_value = (*flag_todo)(argv, current_index, argc);
+
+
 			if (returned_value == -1)
 			{
 				return -1;
@@ -68,6 +72,7 @@ int flag_names_comparison(char *possible_flag, Flag_t flags[])
 {
 	assert(possible_flag != NULL && "Argv[current_index] cant be NULL");
 	assert(flags != NULL && "list_of_flags cant be NULL");
+
 
 	for (size_t i = 0; i < size_flag_list; i++)
 	{
@@ -133,7 +138,8 @@ void run_tests_command_line(Test data_for_tests[], const char * filename)
 {
 	read_file(data_for_tests, filename);
     const size_t number_of_tests = sizeof(*data_for_tests) / sizeof(data_for_tests[0]);
-    printf("\nTesting equation solver\n\n");
+    
+	printf("\nTesting equation solver\n\n");
 
     int failed = 0;
     failed = test_solve_square(data_for_tests, number_of_tests);
@@ -162,7 +168,6 @@ int lets_solve_square_equation(char * argv[], int current_index_argv, int argc)
 	printf("a = %.2lf, b = %.2lf, c = %.2lf\n\n", Coefs.a, Coefs.b, Coefs.c);
 
 	square_solve(&Coefs, &Solution);
-
 	print_solution(Solution);
 
 	return solve_argc;
@@ -186,7 +191,6 @@ int instant_coefs_input(char * argv[], int current_index_argv, int argc)
 			printf("a = %.2lf, b = %.2lf, c = %.2lf\n\n", Coefs.a, Coefs.b, Coefs.c);
 
 			square_solve(&Coefs, &Solution);
-
 			print_solution(Solution);
 			return coefs_flags;
 		}

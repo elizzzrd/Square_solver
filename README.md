@@ -25,7 +25,11 @@
     git clone https://github.com/elizzzrd/Square_solver.git
     ````
 2. Соберите проект с помощью `make`
-3. Запустите встроенные тесты с помощью `make tests`
+3. Запустите встроенные тесты с помощью
+    ```bash
+    make tests
+    make check
+    ```
 4. Очистите собранные файлы с помощью `make clean`
 
 

@@ -7,6 +7,7 @@ int main(int argc, char *argv[])
 {
 	int returned_value = parse_flags(argc, argv);
 
+	
 	if (returned_value == -1)
 	{
 		printf("\n\nIncorrect flag input. Please try again or type help.\n");
@@ -18,6 +19,5 @@ int main(int argc, char *argv[])
 
 
 	printf("Program is finished.\n\n");
-	
     return 0;
 }

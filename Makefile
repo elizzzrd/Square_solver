@@ -11,7 +11,7 @@ CFLAGS = -Wshadow -Winit-self -Wredundant-decls \
 
 INCLUDES = -I headers
 
-TARGET = program
+TARGET = square_solver
 
 SRCS = $(wildcard source/*.c)
 HEADERS = $(wildcard headers/*.h)

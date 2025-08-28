@@ -49,7 +49,7 @@ $(TESTS_DIR)/%.o: $(TESTS_DIR)/%.c $(HEADERS)
 
 
 clean:
-	del $(SRCS_DIR)\*.o $(TESTS_DIR)\*.o *.exe
+	del $(SRCS_DIR)\*.o $(TESTS_DIR)\*.o 
 
 
 check: tests

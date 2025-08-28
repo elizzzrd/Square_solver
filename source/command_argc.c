@@ -2,6 +2,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <ctype.h>
+#include <assert.h>
 #include <stdbool.h>
 #include "structures.h"
 #include "floating_point_arithmetic.h"
@@ -27,6 +28,9 @@ size_t size_flag_list = sizeof(list_of_flags) / sizeof(list_of_flags[0]);
 
 int parse_flags(int argc, char *argv[])
 {
+	assert(argc != 0 && "Argc cant be 0");
+	assert(argv != NULL && "Argv cant be NULL");
+
 	int executed_flags = 0;
 	if (argc == 1)
 	{
@@ -62,6 +66,9 @@ int parse_flags(int argc, char *argv[])
 
 int flag_names_comparison(char *possible_flag, Flag_t flags[])
 {
+	assert(possible_flag != NULL && "Argv[current_index] cant be NULL");
+	assert(flags != NULL && "list_of_flags cant be NULL");
+
 	for (size_t i = 0; i < size_flag_list; i++)
 	{
 		if (strcmp(possible_flag, flags[i].short_name) == 0)

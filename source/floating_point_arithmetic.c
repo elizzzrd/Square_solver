@@ -2,9 +2,9 @@
 #include <math.h>
 #include <stdbool.h>
 #include <stdlib.h>
+#include <assert.h>
 #include "structures.h"
 #include "floating_point_arithmetic.h"
-
 
 
 bool is_zero(double num)
@@ -21,6 +21,7 @@ bool is_positive(double num)
 
 void clamp_to_zero(double * number)
 {
+    assert(number != NULL && "NULL pointer");
     if (is_zero(*number))
     {
         *number = 0;
@@ -36,9 +37,11 @@ bool double_comparison(double number1, double number2)
 
 bool convert_to_float(const char *str_to_convert, double * double_number) 
 {
+    assert(str_to_convert != NULL && "NULL pointer");
+    assert(double_number != NULL && "NULL pointer");
     if (str_to_convert == NULL) return false;
 
-    char *end_of_str;
+    char *end_of_str = NULL;
     strtod(str_to_convert, &end_of_str);
 
     if ((*end_of_str) == '\0')

@@ -30,3 +30,39 @@ void square_equation_solve(SquareEquationCoefs *coef, QuadraticSolution *roots);
  * @param roots structure for solution of equation, this structure should be initialized before using function
  */
 void square_solve(SquareEquationCoefs * Coef, QuadraticSolution * Solution);
+
+/**
+ * @brief Solve equation if D > 0
+ * 
+ * 
+ * @param a coeficient a
+ * @param b coeficient b
+ * @param c coeficient c
+ * @param D discriminant
+ * @param roots structure for solution of equation, this structure should be initialized before using function
+ */
+void D_positive_solve(double a, double b, double c, double D, QuadraticSolution *roots);
+
+/**
+ * @brief Solve equation if D == 0
+ * 
+ * 
+ * @param a coeficient a
+ * @param b coeficient b
+ * @param c coeficient c
+ * @param D discriminant
+ * @param roots structure for solution of equation, this structure should be initialized before using function
+ */
+void D_zero_solve(double a, double b, double c, double D, QuadraticSolution *roots);
+
+/**
+ * @brief Solve equation if D < 0
+ * 
+ * 
+ * @param a coeficient a
+ * @param b coeficient b
+ * @param c coeficient c
+ * @param D discriminant
+ * @param roots structure for solution of equation, this structure should be initialized before using function
+ */
+void D_negative_solve(double a, double b, double c, double D, QuadraticSolution *roots);

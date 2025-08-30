@@ -10,14 +10,13 @@
 
 bool read_file(Test data_for_tests[], const char * filename)
 {
-    FILE *data;
+    FILE *data = NULL;
     if ((data = fopen(filename, "r")) == NULL)
     {
         fprintf(stderr, "Can not open the file \"%s\"\n", filename);
-        exit(EXIT_FAILURE);
+        return false;
     }
     rewind(data);
-    
 
     int count = 0;
     while (count < NMAX)
@@ -32,34 +31,52 @@ bool read_file(Test data_for_tests[], const char * filename)
             assert(false && "Reading file error");
             return false;
         }
-        
         symbols_read = 0;
-        if (data_for_tests[count].check_solution.type == 0 || data_for_tests[count].check_solution.type == 1)
+        switch(data_for_tests[count].check_solution.type)
         {
-            ;
-        }
-        else if (data_for_tests[count].check_solution.type == 2)
-        {
-            fscanf(data, "%lf",&data_for_tests[count].check_solution.x0);
-        }
-        else if (data_for_tests[count].check_solution.type == 3)
-        {
-            fscanf(data, "%lf %lf", &data_for_tests[count].check_solution.real_roots[0],
-                                    &data_for_tests[count].check_solution.real_roots[1]);
-        }
-        else if (data_for_tests[count].check_solution.type == 4)
-        {
-            fscanf(data, "%lf %lf %lf %lf", 
+            case NO_SOLUTION: break;
+            case ALL_REAL_NUMBERS: break;
+            case ONE_REAL_ROOT: 
+            {
+                if ((fscanf(data, "%lf", &data_for_tests[count].check_solution.x0)) != 1)
+                {
+                    assert(false && "Reading file error");
+                    return false;
+                }
+                break;
+            }
+            case TWO_REAL_ROOTS:
+            {
+                if ((fscanf(data, "%lf %lf", &data_for_tests[count].check_solution.real_roots[0],
+                                            &data_for_tests[count].check_solution.real_roots[1])) != 2)
+                {
+                    assert(false && "Reading file error");
+                    return false;
+                }
+                break;
+            }
+            case TWO_COMPLEX_ROOTS:
+            {
+                if ((fscanf(data, "%lf %lf %lf %lf", 
                                     &data_for_tests[count].check_solution.complex_roots[0].real,
                                     &data_for_tests[count].check_solution.complex_roots[0].imag,
                                     &data_for_tests[count].check_solution.complex_roots[1].real,
-                                    &data_for_tests[count].check_solution.complex_roots[1].imag);                          
+                                    &data_for_tests[count].check_solution.complex_roots[1].imag)) !=4)
+                {
+                    assert(false && "Reading file error");
+                    return false;
+                }
+                break;
+            }
+            default:
+            {
+                assert(false && "Unknown type of solutioin");
+                break;
+            }
         }
         count++;
     }
     fclose(data);
     return true;        
 }
-
-
 

@@ -12,6 +12,7 @@ void skip_line(void)
     while (getchar() != '\n') continue; 
 }
 
+
 void read_input(SquareEquationCoefs *coef) 
 {
 	printf("Enter a, b, c:\n");
@@ -26,6 +27,7 @@ void read_input(SquareEquationCoefs *coef)
 	coef->c = read_coef();
 }
 
+
 double read_coef(void)
 {
 	double temp = 0;
@@ -38,6 +40,7 @@ double read_coef(void)
 	skip_line();
 	return temp;
 }
+
 
 void print_solution(const QuadraticSolution solution)
 {
@@ -56,7 +59,6 @@ void print_solution(const QuadraticSolution solution)
 		{
 			printf("One real root:\n");
 			printf("x = %.2lf\n", solution.x0); 
-
 			break;
 		}
 		case TWO_REAL_ROOTS:
@@ -64,7 +66,6 @@ void print_solution(const QuadraticSolution solution)
 			printf("Two real roots:\n");
 			printf("x1 = %.2lf\n", solution.real_roots[0]);
 		    printf("x2 = %.2lf\n", solution.real_roots[1]);
-
 			break;
 		}
 		case TWO_COMPLEX_ROOTS:

@@ -24,7 +24,6 @@
     } while (0)
 
 
-
 /**
  * @brief Defines a structure to for checking answers in unit test
  */
@@ -45,7 +44,6 @@ typedef struct {
     SquareEquationCoefs test_coefs;
     Check_answers check_solution;
 } Test;
-
 
 
 /**

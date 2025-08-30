@@ -4,6 +4,7 @@
 #include "floating_point_arithmetic.h"
 #include "equation_solver.h"
 #include "read_file.h"
+#include "command_argc.h"
 
 /*
 static Test data_for_tests[] = {
@@ -31,8 +32,6 @@ static Test data_for_tests[] = {
     static const size_t number_of_tests = sizeof(data_for_tests) / sizeof(data_for_tests[0]);
 */
 
-
-
 int main(void)
 {
     Test data_for_tests[NMAX];
@@ -45,11 +44,11 @@ int main(void)
 
     if (!failed)
     {
-        printf("All tests passed!\n\n");
+        printf(GREEN "All tests passed!\n\n" RESET);
     }
     else
     {
-        printf("%d tests failed.\n", failed);
+        printf(RED "%d tests failed.\n" RESET, failed);
     }
 
     return 0;

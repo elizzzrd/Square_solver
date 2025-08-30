@@ -15,7 +15,6 @@ void read_input(SquareEquationCoefs *coef);
 /**
  * @brief Read double number from stdin.
  * 
- * 
  * @return Read number
  */
 double read_coef(void); 

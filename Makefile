@@ -7,7 +7,8 @@ CFLAGS = -Wshadow -Winit-self -Wredundant-decls \
 -Wcast-qual -Wconversion -Wempty-body -Wformat-security \
 -Wformat=2 -Wignored-qualifiers -Wlogical-op -Wno-missing-field-initializers \
 -Wpointer-arith -Wstack-usage=8192 -Wstrict-aliasing -Wtype-limits -Wwrite-strings \
--Werror=vla -D_DEBUG -D_EJUDGE_CLIENT_SIDE -fdiagnostics-color=always
+-Werror=vla -D_DEBUG -D_EJUDGE_CLIENT_SIDE -fdiagnostics-color=always 
+LDFLAGS = -lm
 
 INCLUDES = -I headers
 
@@ -23,7 +24,7 @@ SRCS_DIR = source
 all: $(TARGET)
 
 $(TARGET): $(OBJS) tests/tests.o tests/read_file.o
-	@$(CC) $(OBJS) tests/tests.o tests/read_file.o -o $(TARGET)
+	@$(CC) $(OBJS) tests/tests.o tests/read_file.o -o $(TARGET) $(LDFLAGS)
 
 %.o: %.c $(HEADERS)
 	@$(CC) $(INCLUDES) $(CFLAGS) -c $< -o $@
@@ -41,7 +42,7 @@ tests: $(TEST_TARGET)
 	
 
 $(TEST_TARGET): $(TEST_OBJS) source/equation_solver.o source/floating_point_arithmetic.o 
-	@$(CC) $(TEST_OBJS) source/equation_solver.o source/floating_point_arithmetic.o -o $(TEST_TARGET)
+	@$(CC) $(TEST_OBJS) source/equation_solver.o source/floating_point_arithmetic.o -o $(TEST_TARGET) $(LDFLAGS)
 
 
 $(TESTS_DIR)/%.o: $(TESTS_DIR)/%.c $(HEADERS)
@@ -49,7 +50,7 @@ $(TESTS_DIR)/%.o: $(TESTS_DIR)/%.c $(HEADERS)
 
 
 clean:
-	del $(SRCS_DIR)\*.o $(TESTS_DIR)\*.o 
+	rm $(SRCS_DIR)/*.o $(TESTS_DIR)/*.o 
 
 
 check: tests
